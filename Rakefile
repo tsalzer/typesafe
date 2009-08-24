@@ -5,8 +5,9 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "typesafe"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{provides Object#must_be_kind_of for typesafe development}
+    gem.description = %Q{Simplifies typesafe development by providing the additional
+      methods Object#must_by_kind_of ad Object#must_be_a.}
     gem.email = "till.salzer@googlemail.com"
     gem.homepage = "http://github.com/tsalzer/typesafe"
     gem.authors = ["Till Salzer"]

@@ -1,6 +1,7 @@
 = typesafe
 
-Description goes here.
+Typesafe is a tiny extension to core Ruby to simplify checks for
+kind_of?.
 
 == Note on Patches/Pull Requests
  
