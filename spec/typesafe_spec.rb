@@ -14,6 +14,31 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
     it "should raise a TypeCheckError for mismatching types" do
       lambda{"1".send method, Fixnum}.should raise_error(TypeCheckError)
     end
+    it "should not raise a TypeCheckError for mismatching types if a block was given" do
+      lambda{"1".send method, Fixnum do |clss|
+        clss.should be_a Class
+        clss.should == String
+        end}.should_not raise_error(TypeCheckError)
+    end
+    it "should execute the given block for mismatching types" do
+      executed = false
+      lambda{"1".send method, Fixnum do |clss|
+        clss.should be_a Class
+        clss.should == String
+        executed = true
+        end}.should_not raise_error(TypeCheckError)
+        executed.should == true
+    end
+    it "should not execute the given block for matching types" do
+      executed = false
+      lambda{1.send method, Fixnum do |clss|
+        clss.should be_a Class
+        clss.should == Fixnum
+        executed = true
+        end}.should_not raise_error(TypeCheckError)
+        executed.should == false
+    end
+    
     it "should raise a RuntimeError if the given match is not a Class" do
       lambda{"1".send method, "Fixnum"}.should raise_error(RuntimeError)
       lambda{"1".send method, "Fixnum"}.should_not raise_error(TypeCheckError)
