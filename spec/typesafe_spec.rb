@@ -6,19 +6,19 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
       Object.new.should respond_to(method)
     end
     it "should recognize a simple type" do
-      lambda{1.send method, Fixnum}.should_not raise_error(TypeCheckError)
+      lambda{1.send method, Fixnum}.should_not raise_error(TypeError)
     end
     it "should recognize parent classes" do
-      lambda{self.send method, Object}.should_not raise_error(TypeCheckError)
+      lambda{self.send method, Object}.should_not raise_error(TypeError)
     end
-    it "should raise a TypeCheckError for mismatching types" do
-      lambda{"1".send method, Fixnum}.should raise_error(TypeCheckError)
+    it "should raise a TypeError for mismatching types" do
+      lambda{"1".send method, Fixnum}.should raise_error(TypeError)
     end
-    it "should not raise a TypeCheckError for mismatching types if a block was given" do
+    it "should not raise a TypeError for mismatching types if a block was given" do
       lambda{"1".send method, Fixnum do |clss|
         clss.should be_a Class
         clss.should == String
-        end}.should_not raise_error(TypeCheckError)
+        end}.should_not raise_error(TypeError)
     end
     it "should execute the given block for mismatching types" do
       executed = false
@@ -26,7 +26,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
         clss.should be_a Class
         clss.should == String
         executed = true
-        end}.should_not raise_error(TypeCheckError)
+        end}.should_not raise_error(TypeError)
         executed.should == true
     end
     it "should not execute the given block for matching types" do
@@ -35,17 +35,17 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
         clss.should be_a Class
         clss.should == Fixnum
         executed = true
-        end}.should_not raise_error(TypeCheckError)
+        end}.should_not raise_error(TypeError)
         executed.should == false
     end
     
     it "should raise a RuntimeError if the given match is not a Class" do
       lambda{"1".send method, "Fixnum"}.should raise_error(RuntimeError)
-      lambda{"1".send method, "Fixnum"}.should_not raise_error(TypeCheckError)
+      lambda{"1".send method, "Fixnum"}.should_not raise_error(TypeError)
     end
     
-    it "should #{nil_allowed ? 'not ' : ''}raise a TypeCheckError for mismatching types on nil" do
-      lambda{nil.send method, Fixnum}.send nil_allowed ? :should_not : :should, raise_error(TypeCheckError)
+    it "should #{nil_allowed ? 'not ' : ''}raise a TypeError for mismatching types on nil" do
+      lambda{nil.send method, Fixnum}.send nil_allowed ? :should_not : :should, raise_error(TypeError)
     end
     
     it "should recognize included modules" do
@@ -54,7 +54,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
         include TestModule
       end
       o = TestClass.new
-      lambda{o.send method, TestModule}.should_not raise_error(TypeCheckError)
+      lambda{o.send method, TestModule}.should_not raise_error(TypeError)
     end
   end
 end
