@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{typesafe}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Till Salzer"]
-  s.date = %q{2009-08-26}
+  s.date = %q{2009-08-30}
   s.description = %q{Simplifies typesafe development by providing the additional
       methods Object#must_by_kind_of ad Object#must_be_a.}
   s.email = %q{till.salzer@googlemail.com}
