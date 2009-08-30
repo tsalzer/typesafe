@@ -12,6 +12,7 @@ end
 
 # plain module
 module ModA
+  def moda_method ; end
 end
 # plain class
 class ClassA
@@ -24,7 +25,7 @@ class ClassC
   extend ModA
 end
 # plain class, includes module ModA, thereby not descending ModA
-class Classd
+class ClassD
   include ModA
 end
 

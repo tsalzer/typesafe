@@ -30,7 +30,7 @@ module TypeSafe
   # this class or object must be kind of a given class.
   # Method returns <tt>self</tt> unless it raises a TypeError.
   def must_be_kind_of(clss, &blk)
-    if clss.kind_of?(Module) or clss.kind_of?(Class)
+    if clss.kind_of?(Class)
       matched = if self.kind_of?(Class)
         # classes are expected to "descend" from comparator
         if self != clss
@@ -48,6 +48,15 @@ module TypeSafe
           return yield self.class
         else
           raise TypeError.new("#{self} must be of type #{clss}")
+        end
+      end
+    elsif clss.kind_of?(Module)
+      # check if the given module is included
+      unless self.included_modules.include?(clss)
+        if blk
+          return yield self.class
+        else
+          raise TypeError.new("#{self} does not include module #{clss}")
         end
       end
     else
